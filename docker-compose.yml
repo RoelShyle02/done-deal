@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+ 
+  tasks_php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_PORT: 3306
+      DB_HOST: tasks_db
+      SERVICE_NAME: tasks_php
+    working_dir: /var/www
+    volumes:
+    - ./backend/:/var/www
+    - ./frontend/:/var/www/frontend
+    - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+
+    dns:
+      - 8.8.8.8
+    networks:
+      - tasks_network
+      
+  tasks_db:
+    image: mysql:8.0.20
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./database/tasks.sql:/docker-entrypoint-initdb.d/tasks.sql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: tasks_manager
+      SERVICE_TAGS: dev
+      SERVICE_NAME: tasks_db
+    ports:
+      - "3306:3306"
+    networks:
+      - tasks_network
+
+  tetris_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - tasks_db
+    environment:
+      PMA_HOST: tasks_db
+      MYSQL_ROOT_PASSWORD:
+    ports:
+      - "82:80"
+    networks:
+      - tasks_network
+     
+  planning_nginx_php:
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./backend:/var/www
+      - ./nginx/conf.d/backend/:/etc/nginx/conf.d/
+    ports:
+      - "8000:80"  
+    networks:
+      - tasks_network
+ 
+networks:
+  tasks_network:
+    driver: bridge
