@@ -17,20 +17,22 @@ export const useUserStore = defineStore("user", {
 
   actions: {
     async isLoggedIn(path) {
-      var isLogged = false;
-
+      let isLogged = false;
+    
+      // If there's no user in the state
       if (this.user == null) {
+        // Check if there's a token in localStorage
         if (localStorage.getItem("token") != null) {
           try {
-            await Api(true)
-              .get("/session")
-              .then((response) => {
-                if (response.status == 200 && response.data != null) {
-                  this.user = response.data;
-                  isLogged = true;
-                  this.loguar = true;
-                }
-              });
+            // Call an API to verify the session
+            const response = await Api(true).get("/session");
+    
+            // If the response is valid, set the user data
+            if (response.status == 200 && response.data != null) {
+              this.user = response.data;
+              isLogged = true;
+              this.loguar = true;
+            }
           } catch (e) {
             console.log(e);
           }
@@ -39,20 +41,29 @@ export const useUserStore = defineStore("user", {
         isLogged = true;
         this.loguar = true;
       }
-
-      console.log(this.loguar, "loguar");
-      if (isLogged == false) {
+    
+      // If the user is not logged in, remove tokens and user data
+      if (!isLogged) {
         localStorage.removeItem("token");
         localStorage.removeItem("access_token");
         localStorage.removeItem("user");
-        console.log("not logged", path);
-
-        // return path
+    
+        console.log("Not logged in, redirecting to login", path);
+        if(path == '/login' || path == '/signup'){
+          this.redirectToHome();
+        }
+    
+        // Return the path to redirect to login
+        else return "/login"; // or use your router's redirection method
       }
-    },
+    
+      // If the user is logged in, return true or let the route continue
+      return true;
+    }
+,    
     redirectToHome(path) {
       if (this.loguar == true) {
-        if (path == "/login" || path == "/signup") return "/";
+        if (path == "/login" || path == "/signup") return "/dashboard";
       }
     },
     async login() {

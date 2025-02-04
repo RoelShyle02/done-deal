@@ -25,13 +25,20 @@ Route::post('signup', [UserController::class, 'signup']);
 Route::post('login', [UserController::class, 'login']);
 
 
-Route::middleware('auth:sanctum',)->group(function () {
+Route::middleware('auth:sanctum', )->group(function () {
 
     Route::get('/logout', [UserController::class, 'logout']);
     Route::get('/session', function () {
         return auth()->user();
     });
     Route::get('/planners', [TaskController::class, 'getPlanners']);
+    Route::get('/dashboard-planners', [TaskController::class, 'getDashboardPlanners']);
+
     Route::get('/tasks', [TaskController::class, 'getTasks']);
     Route::post('/create-planner', [TaskController::class, 'createPlanner']);
+
+    Route::post('/create-task', [TaskController::class, 'createTask']);
+    Route::post('/update-task', [TaskController::class, 'updateTask']);
+    Route::post('/delete-planner', [TaskController::class, 'deletePlanner']);
+
 });

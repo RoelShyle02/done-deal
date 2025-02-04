@@ -4,6 +4,14 @@ import { useTaskStore } from "../stores/task";
 
 const routes = [
   {
+    path: "/dashboard",
+    component: () => import("@/pages/dashboard.vue"),
+    beforeEnter: [() => useUserStore().isLoggedIn("/"), () => useTaskStore().getDashboardPlanners()],
+    meta: {
+      title: "DoneDeal - Dashboard",
+    },
+  },
+  {
     path: "/",
     component: () => import("@/pages/home.vue"),
     beforeEnter: [
@@ -37,6 +45,21 @@ const routes = [
     ],
     meta: {
       title: "DoneDeal - Sign-up",
+    },
+  },
+
+  {
+    path: "/about",
+    component: () => import("@/pages/about.vue"),
+    meta: {
+      title: "DoneDeal - About",
+    },
+  },
+  {
+    path: "/contact",
+    component: () => import("@/pages/contact.vue"),
+    meta: {
+      title: "DoneDeal - Contact",
     },
   },
 ];

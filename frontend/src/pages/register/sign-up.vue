@@ -1,39 +1,21 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-      <h2 class="text-2xl font-bold text-center mb-6">Sign Up</h2>
+  <div class="flex items-center justify-center min-h-[92vh] bg-gray-100">
+    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+      <h2 class="mb-6 text-2xl font-bold text-center">Sign Up</h2>
       <form @submit.prevent="handleSubmit">
         <div class="mb-4">
           <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-          <input
-            id="name"
-            type="text"
-            v-model="form.name"
-            class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <input id="name" type="text" v-model="form.name" class="block w-full px-4 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500" required />
         </div>
 
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            id="email"
-            type="email"
-            v-model="form.email"
-            class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <input id="email" type="email" v-model="form.email" class="block w-full px-4 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500" required />
         </div>
 
         <div class="mb-4">
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-          <input
-            id="password"
-            type="password"
-            v-model="form.password"
-            class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <input id="password" type="password" v-model="form.password" class="block w-full px-4 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500" required />
         </div>
 
         <div class="mb-6">
@@ -42,21 +24,16 @@
             id="password_confirmation"
             type="password"
             v-model="form.password_confirmation"
-            class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="block w-full px-4 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
             required
           />
         </div>
 
-        <button
-          type="submit"
-          class="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Sign Up
-        </button>
+        <button type="submit" class="w-full px-4 py-2 font-bold text-white bg-teal-600 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">Sign Up</button>
       </form>
       <p class="mt-4 text-sm text-center text-gray-600">
         Already have an account?
-        <router-link to="/login" class="text-blue-600 hover:underline">Login here</router-link>
+        <router-link to="/login" class="text-teal-600 hover:text-teal-700">Login here</router-link>
       </p>
     </div>
   </div>
